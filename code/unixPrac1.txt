@@ -1,0 +1,19 @@
+#1
+wc -l ../data/fasta/407228326.fasta ../data/fasta/407228412.fasta ../data/fasta/e_coli.fasta
+#Count newline characters; The final lines of 407228326.fasta and 407228412.fasta are not newline-terminated. Hence their counts are one less than their displayed line counts.
+
+#2
+tail -n +2 ../data/fasta/e_coli.fasta
+#+2 means displaying from the second line to the end, skipping the header. That is because the header does not belong to DNA sequence.
+
+#3
+tail -n +2 ../data/fasta/e_coli.fasta | tr -d '\r\n' | wc -m 
+#Count all sequence symbols, excluding the header and line-ending characters.
+
+#4
+tail -n +2 ../data/fasta/e_coli.fasta | tr -d '\r\n' | grep -o 'ATGC' |  wc -l
+#Count every occurrence of ATGC in the e_coli.fasta, excluding the header and line-ending characters.
+
+#5
+AT_count=$(tail -n +2 ../data/fasta/e_coli.fasta | tr -d '\r\n' | grep -o '[AT]' |  wc -l) ; GC_count=$(tail -n +2 ../data/fasta/e_coli.fasta | tr -d '\r\n' | grep -o '[GC]' |  wc -l) ; echo "$AT_count $GC_count" | awk '{print $1 / $2}'
+#First find the number of (A+T) and (G+C), and then calculate (A+T)/(G+C).
