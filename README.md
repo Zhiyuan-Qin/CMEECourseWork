@@ -69,3 +69,40 @@ Spaces within CSV fields can make the space-delimited output ambiguous.
 - Tasks: Assignment 1 UNIX practicals, shell scripts, testing, and README documentation.
 - Purpose: Explain commands and shell syntax, help diagnose errors, suggest small code snippets and test commands, and help draft documentation.
 - Verification: I ran the commands and scripts locally, inspected their outputs and exit statuses, checked script syntax with `bash -n`, and used `diff` to confirm that the tested input files remained unchanged.
+
+## Bootcamp Assignment 2: Tree-survey cleaning
+
+### Input and outputs
+
+Input: `data/silwood_trees_raw.csv`
+
+Outputs:
+- `results/silwood_trees_clean.csv`: cleaned, accepted records.
+- `results/silwood_tree_issues.csv`: rejected records with source row numbers, record identifiers and rejection reasons.
+- `results/oak_species_counts.csv`: counts of accepted oak records by species.
+
+### Processing plan
+
+```text
+Before checking records:
+    Create an empty list for accepted records.
+    Create an empty list for issue reports.
+    Create an empty set for accepted identifiers.
+
+Check each record in input order:
+    If the record is valid:
+        Add the cleaned record to the accepted records list.
+        Add its identifier to the accepted identifiers set.
+    Otherwise:
+        Add one issue report containing source_row, record_id
+        and reasons to the issue reports list.
+Count accepted oak records by species.
+
+Sort accepted records by record_id.
+Keep issue reports in source-row order.
+Sort oak species counts by species.
+
+Write accepted records to results/silwood_trees_clean.csv.
+Write issue reports to results/silwood_tree_issues.csv.
+Write oak species counts to results/oak_species_counts.csv.
+```
