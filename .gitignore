@@ -2,3 +2,5 @@
 .venv/
 results/
 sandbox/
+__pycache__/
+*.pyc

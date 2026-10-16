@@ -84,6 +84,8 @@ Outputs:
 ### Processing plan
 
 ```text
+Read records from the input CSV.
+
 Before checking records:
     Create an empty list for accepted records.
     Create an empty list for issue reports.
@@ -106,3 +108,32 @@ Write accepted records to results/silwood_trees_clean.csv.
 Write issue reports to results/silwood_tree_issues.csv.
 Write oak species counts to results/oak_species_counts.csv.
 ```
+### Running and testing
+
+Run these commands from the project root:
+
+```bash
+python3 code/clean_silwood_trees.py
+python3 code/test_silwood_trees.py
+```
+### A useful test
+
+I tested a record with a missing location and a distance of zero.
+I expected both rejection reasons, with the location reason first.
+This test checks that the program collects all applicable reasons
+instead of stopping after the first problem.
+
+### AI assistance
+
+I used ChatGPT to understand Python syntax, dictionaries, sets,
+validation rules and testing. It also helped me with error messages,
+code examples, test inputs and README wording. I checked the suggestions
+against the metadata, predicted expected results and ran assertions.
+I also inspected the output files and compared checksums after rerunning
+the program.
+
+### Limitations
+
+The program follows the supplied metadata. It does not guess missing
+values or correct unrecognised spellings. Passing the current tests
+does not guarantee that every possible input has been covered.
