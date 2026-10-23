@@ -138,7 +138,7 @@ The program follows the supplied metadata. It does not guess missing
 values or correct unrecognised spellings. Passing the current tests
 does not guarantee that every possible input has been covered.
 
-## Assignment 3: Tree-height calculation
+## Assignment 3: Tree heights and Pound Hill species richness
 
 ### Input and output
 
@@ -202,6 +202,32 @@ It also checks repeated execution and rejection of a missing argument.
 Additional manual checks confirmed rejection of multiple arguments,
 a nonexistent input file and missing required columns.
 
+### Pound Hill species richness
+
+Script: `code/pound_hill_analysis.R`
+
+Inputs (kept unchanged):
+- `data/pound_hill_data.csv`
+- `data/pound_hill_meta_data.csv`
+
+Required R packages: `reshape2` and `ggplot2`.
+
+Run from the repository root:
+
+```bash
+Rscript code/pound_hill_analysis.R
+```
+
+Outputs:
+- `results/pound_hill_plot_richness.csv`: one row per plot, containing Cultivation, Block, Plot and MeanRichness.
+- `results/pound_hill_plot_richness.pdf`: individual plot-level mean richness values shown by cultivation treatment.
+
+Blank species counts are treated as observed zeros, as specified in the metadata. Richness is calculated for each quadrat first, then averaged within each plot.
+
+Checks confirmed numeric, non-negative counts with no missing values, 41 species, 59 quadrats and 12 plots. The plot summary contains four plots per treatment and no duplicate plot identifiers. The script was rerun successfully in a fresh Rscript session.
+
 ### AI assistance
 
 I used ChatGPT on 20 and 23 October 2026 for step-by-step explanations of R syntax, feedback on my code, suggestions for checks, and help with README documentation. I checked the suggestions by running the script, independently calculating the first tree height, comparing the original columns and row order, and checking that rerunning replaced the output. I also tested the script using source().
+
+For the Pound Hill practical on 23 October 2026, I used ChatGPT for explanations of R syntax, data reshaping and plotting, code examples and feedback, suggestions for small checks, troubleshooting package installation, and help with documentation and English wording. I checked its suggestions against the supplied metadata, inspected the summary table and generated figure, and reran the script to check reproducibility.
