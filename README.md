@@ -172,6 +172,36 @@ source("code/TreeHeight.R")
 - Running the script again replaces the output and still produces 120 data rows.
 - The script also runs successfully using `source()`.
 
+### Tree heights from a command-line input
+
+Run from the repository root:
+
+```bash
+Rscript code/get_TreeHeight.R data/trees.csv
+```
+
+The script accepts exactly one readable CSV file containing Species,
+Distance.m and Angle.degrees. It applies the same validation and height
+calculation as TreeHeight.R.
+
+The output is saved as results/<input_basename>_treeheights.csv.
+For example, data/trees.csv produces results/trees_treeheights.csv.
+Running the script again replaces the existing output. Input files with
+the same basename produce the same output filename, even when stored in
+different directories.
+
+Run the checks with:
+
+```bash
+bash code/run_get_TreeHeight.sh
+```
+
+The shell script creates a small test CSV in sandbox, runs both datasets,
+and checks output dimensions, column names and calculated heights.
+It also checks repeated execution and rejection of a missing argument.
+Additional manual checks confirmed rejection of multiple arguments,
+a nonexistent input file and missing required columns.
+
 ### AI assistance
 
 I used ChatGPT on 20 and 23 October 2026 for step-by-step explanations of R syntax, feedback on my code, suggestions for checks, and help with README documentation. I checked the suggestions by running the script, independently calculating the first tree height, comparing the original columns and row order, and checking that rerunning replaced the output. I also tested the script using source().
