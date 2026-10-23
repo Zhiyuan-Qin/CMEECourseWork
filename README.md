@@ -137,3 +137,41 @@ the program.
 The program follows the supplied metadata. It does not guess missing
 values or correct unrecognised spellings. Passing the current tests
 does not guarantee that every possible input has been covered.
+
+## Assignment 3: Tree-height calculation
+
+### Input and output
+
+- Script: `code/TreeHeight.R`
+- Input: `data/trees.csv` (kept unchanged).
+- Output: `results/TreeHts.csv`.
+
+The script checks the required columns, numeric types, finite values and measurement ranges. It preserves the original three columns and row order, and adds `height_m` as the fourth column.
+
+### How to run
+
+Run from the repository root:
+
+```bash
+Rscript code/TreeHeight.R
+```
+
+Alternatively, start R from the repository root and run:
+
+```r
+source("code/TreeHeight.R")
+```
+
+### Checks performed
+
+- The output contains 120 data rows.
+- The original three columns and row order match the input.
+- I independently checked the first record, Populus tremula:
+  `31.6658337740228 * tan(41.2826361937914 * pi / 180)`,
+  giving approximately 27.80212 metres, matching the output.
+- Running the script again replaces the output and still produces 120 data rows.
+- The script also runs successfully using `source()`.
+
+### AI assistance
+
+I used ChatGPT on 20 and 23 October 2026 for step-by-step explanations of R syntax, feedback on my code, suggestions for checks, and help with README documentation. I checked the suggestions by running the script, independently calculating the first tree height, comparing the original columns and row order, and checking that rerunning replaced the output. I also tested the script using source().
