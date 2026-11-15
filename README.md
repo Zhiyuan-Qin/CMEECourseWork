@@ -61,7 +61,12 @@ exit status 0 after rerunning both converters, confirming that the
 outputs did not accumulate extra content. Input-preservation
 comparisons also returned 0. The temperature example generated
 `results/1800.csv.txt`, and I inspected its first five lines.
-Clean-checkout testing remains to be completed.
+In a fresh clone of commit `b7dbfed`, I ran both README example
+commands from the repository root. The scripts created `results/`
+and generated `results/tab-example.tsv.csv` and
+`results/1800.csv.txt`. I inspected the outputs and confirmed that
+the empty field was preserved in the CSV. After running the
+examples, `git status --short` produced no output.
 
 ## Data and limitations
 
