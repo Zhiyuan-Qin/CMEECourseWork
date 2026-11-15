@@ -3,7 +3,7 @@
 # Script: csvtospace.sh
 # Desc: Convert commas to spaces while preserving empty fields.
 # Input: One readable CSV file.
-# Output: ../results/<input-filename>.txt
+# Output: results/<input-filename>.txt
 # Date: 2026-10-08
 
 if [[ $# -ne 1 ]]; then
@@ -18,9 +18,9 @@ fi
 
 input_name=$(basename "$1")
 
-output_file="../results/${input_name}.txt"
+output_file="results/${input_name}.txt"
 
-if ! mkdir -p ../results; then
+if ! mkdir -p results; then
     echo "Cannot create the results directory." >&2
     exit 1
 fi

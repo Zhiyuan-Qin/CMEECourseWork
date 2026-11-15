@@ -20,9 +20,9 @@ echo "Creating a comma delimited version of $1 ..."
 
 input_name=$(basename "$1")
 
-output_file="../results/${input_name}.csv"
+output_file="results/${input_name}.csv"
 
-if ! mkdir -p ../results; then
+if ! mkdir -p results; then
     echo "Cannot create the results directory." >&2
     exit 1
 fi

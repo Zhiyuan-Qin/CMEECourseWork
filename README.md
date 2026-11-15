@@ -21,22 +21,18 @@ This repository contains my CMEE coursework and practical exercises.
 
 The shell scripts require Bash and standard UNIX command-line tools.
 
-From the repository root, enter the code directory:
-
-```bash
-cd code
-```
+Run the following commands from the repository root:
 
 Convert the tab-delimited example to CSV:
 
 ```bash
-bash tabtocsv.sh ../data/tab-example.tsv
+bash code/tabtocsv.sh data/tab-example.tsv
 ```
 
 Convert a temperature CSV file to space-delimited text:
 
 ```bash
-bash csvtospace.sh ../data/temperatures/1800.csv
+bash code/csvtospace.sh data/temperatures/1800.csv
 ```
 
 The outputs are saved as `results/tab-example.tsv.csv` and
@@ -52,6 +48,20 @@ The input files remain unchanged.
 - Missing arguments returned exit status 2; nonexistent input files returned exit status 1.
 - Input files were compared with their original copies using `diff` and remained unchanged.
 - `csvtospace.sh` successfully converted all four temperature files, from `1800.csv` to `1803.csv`.
+
+### Revision and checks - 2026 - 11 - 15
+
+Following the Assignment 1 feedback, I changed both converters to use
+`results/` instead of `../results/` and updated the README commands
+to run from the repository root. Empty fields were preserved, and
+both scripts handled filenames containing spaces, producing
+`results/tab example.tsv.csv` and
+`results/tab example.tsv.csv.txt`. Comparisons using `cmp` returned
+exit status 0 after rerunning both converters, confirming that the
+outputs did not accumulate extra content. Input-preservation
+comparisons also returned 0. The temperature example generated
+`results/1800.csv.txt`, and I inspected its first five lines.
+Clean-checkout testing remains to be completed.
 
 ## Data and limitations
 
