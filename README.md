@@ -125,6 +125,9 @@ Write oak species counts to results/oak_species_counts.csv.
 ```
 ### Running and testing
 
+Requires Python 3. The cleaner uses only the Python standard library;
+no third-party packages are required.
+
 Run these commands from the project root:
 
 ```bash
@@ -138,6 +141,20 @@ I expected both rejection reasons, with the location reason first.
 This test checks that the program collects all applicable reasons
 instead of stopping after the first problem.
 
+### Revisions following feedback
+
+Added descriptive comments to existing tests.
+
+Passed one valid record and one invalid record (with a distance value of "ten") into process_records(), verifying that they are correctly categorized into accepted and issues, respectively.
+
+Passed the resulting `accepted` records into `summarise_oaks()` and
+confirmed that the count for `robur` is 1, so the rejected record
+does not contribute to the summary.
+
+Both the tests and the data-cleaning script exited with status 0.
+The original CSV remained unchanged, and the summary contained
+4 records each for `petraea` and `robur`.
+
 ### AI assistance
 
 I used ChatGPT to understand Python syntax, dictionaries, sets,
@@ -146,6 +163,12 @@ code examples, test inputs and README wording. I checked the suggestions
 against the metadata, predicted expected results and ran assertions.
 I also inspected the output files and compared checksums after rerunning
 the program.
+
+On 2026-11-17, I used ChatGPT to interpret the feedback, explain how
+to test the connection between record cleaning and oak summarisation,
+and help label existing tests with descriptive comments. I ran the
+tests and cleaning script, inspected the outputs, and checked that
+the raw input remained unchanged.
 
 ### Limitations
 

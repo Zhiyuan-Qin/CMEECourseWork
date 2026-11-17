@@ -2,6 +2,7 @@
 
 from clean_silwood_trees import validate_record, process_records, summarise_oaks
 
+# Valid record and test data.
 valid_row = {
     "record_id": "ST901",
     "location": "Manor House",
@@ -15,11 +16,13 @@ clean_record, reasons = validate_record(valid_row, 2, set())
 assert reasons == []
 assert clean_record is not None
 
+# Normalise location capitalisation and surrounding whitespace.
 text_row = valid_row.copy()
 text_row["location"] = "  mAnOr HoUsE  "
 clean_record, reasons = validate_record(text_row, 2, set())
 assert clean_record["location"] == "Manor House"
 
+# Reject missing or unknown locations.
 missing_row = valid_row.copy()
 missing_row["location"] = "   "
 clean_record, reasons = validate_record(missing_row, 2, set())
@@ -32,6 +35,7 @@ clean_record, reasons = validate_record(unknown_row, 2, set())
 assert clean_record is None
 assert reasons == ["invalid location"]
 
+# Check distance boundaries and invalid numeric values.
 boundary_row = valid_row.copy()
 boundary_row["distance_m"] = "100"
 clean_record, reasons = validate_record(boundary_row, 2, set())
@@ -56,23 +60,29 @@ clean_record, reasons = validate_record(nan_row, 2, set())
 assert clean_record is None
 assert reasons == ["invalid distance_m"]
 
+# Reject an angle at the excluded upper boundary.
 angle_row = valid_row.copy()
 angle_row["angle_degrees"] = "90"
 clean_record, reasons = validate_record(angle_row, 2, set())
 assert clean_record is None
 assert reasons == ["angle_degrees out of range"]
 
+# Reject a duplicate record identifier.
 clean_record, reasons = validate_record(valid_row, 2, {"ST901"})
 assert clean_record is None
 assert reasons == ["duplicate record_id"]
 
+# Check accepted/rejected partitioning and count only accepted oaks.
 accepted, issues = process_records([invalid_number_row, valid_row])
 assert len(accepted) == 1
 assert len(issues) == 1
 assert accepted[0]["record_id"] == "ST901"
 assert issues[0]["source_row"] == "2"
 assert issues[0]["reasons"] == "invalid distance_m"
+oak_counts = summarise_oaks(accepted)
+assert oak_counts == [{"species": "robur", "count": "1"}]
 
+# Report multiple validation failures for one record.
 multi_row = valid_row.copy()
 multi_row["location"] = ""
 multi_row["distance_m"] = "0"
@@ -80,6 +90,7 @@ clean_record, reasons = validate_record(multi_row, 2, set())
 assert clean_record is None
 assert reasons == ["missing location", "distance_m out of range"]
 
+# Reject invalid genus/species combinations and unknown genus.
 pair_row = valid_row.copy()
 pair_row["species"] = "excelsior"
 clean_record, reasons = validate_record(pair_row, 2, set())
@@ -92,6 +103,7 @@ clean_record, reasons = validate_record(genus_row, 2, set())
 assert clean_record is None
 assert reasons == ["invalid genus"]
 
+# Check oak counts, non-oak exclusion and species ordering.
 oak_rows = [
     {"genus": "Quercus", "species": "robur"},
     {"genus": "Quercus", "species": "robur"},
@@ -112,12 +124,14 @@ mixed_oak_rows = [
 oak_counts = summarise_oaks(mixed_oak_rows)
 assert oak_counts == [{"species": "petraea", "count": "1"}, {"species": "robur", "count": "2"}]
 
+# Sort accepted records by record identifier.
 earlier_row = valid_row.copy()
 earlier_row["record_id"] = "ST900"
 accepted, issues = process_records([valid_row, earlier_row])
 assert accepted[0]["record_id"] == "ST900"
 assert accepted[1]["record_id"] == "ST901"
 
+# Reject invalid record identifiers.
 id_row = valid_row.copy()
 id_row["record_id"] = "st901"
 clean_record, reasons = validate_record(id_row, 2, set())
