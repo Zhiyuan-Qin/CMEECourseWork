@@ -326,3 +326,201 @@ checks. I ran the revised Pound Hill script, inspected its output,
 and tested it independently in a temporary directory that initially
 had no results/ directory. ChatGPT also helped me construct tree-height output checks and
 invalid-input checks, which I ran and inspected.
+
+## In-class practice scripts
+
+### Shell: variables.sh
+
+Demonstrates command-line parameters, variable assignment, interactive
+input and integer addition. Requires Bash and the standard UNIX tool expr.
+
+Run from the repository root:
+
+```bash
+bash code/variables.sh
+bash code/variables.sh 1 "two words"
+```
+
+Each run asks for a string, then two integers separated by a space.
+The script reads interactive input and prints to the terminal; it
+does not read or create files. Integer input is assumed, as in the
+MQB teaching example.
+
+Checks performed on 17 November 2026:
+- Without arguments, the parameter count was 0 and the first and
+  second parameters were empty. Entering oak and then 0 5 produced
+  the updated string oak and a sum of 5.
+- With arguments 1 "two words", the parameter count was 2 and
+  two words remained one argument. Entering oak and then 3 5
+  produced the updated string oak and a sum of 8.
+
+  ### Shell: MyExampleScript.sh
+
+Demonstrates variable assignment and use of the USER environment
+variable. Requires Bash.
+
+Run from the repository root:
+
+```bash
+bash code/MyExampleScript.sh
+```
+
+The script prints Hello followed by the value of USER.
+It requires no arguments or input files and creates no files.
+
+Checked on 17 November 2026: the output was Hello qinzhiyuan.
+I also compared USER with whoami; both returned qinzhiyuan.
+USER can be changed or unset, so it is not proof of identity.
+
+### Shell: boilerplate.sh
+
+Demonstrates a Bash shebang, script documentation, echo -e and exit status.
+Requires Bash. No arguments or input files are needed; no files are created.
+
+Run from the repository root:
+
+```bash
+bash code/boilerplate.sh
+echo "$?"
+```
+
+Checked on 17 November 2026: the script printed
+"This is a shell script!" with blank lines before and after it,
+and returned exit status 0.
+
+### Shell: CheckLabel.sh
+
+Demonstrates argument validation, Bash conditionals and exit statuses.
+Requires Bash and exactly one argument: oak or pine.
+No input files are read and no files are created.
+
+Run these checks from the repository root, inspecting the exit
+status immediately after each call:
+
+```bash
+bash code/CheckLabel.sh oak
+echo "$?"
+bash code/CheckLabel.sh
+echo "$?"
+bash code/CheckLabel.sh birch
+echo "$?"
+bash code/CheckLabel.sh oak pine
+echo "$?"
+```
+
+Checked on 17 November 2026: oak was accepted with status 0;
+missing arguments produced a usage message and status 2;
+birch produced an unknown-label message and status 1;
+two arguments produced a usage message and status 2.
+
+### Shell: CountLines.sh
+
+Counts newline characters in a file using `wc -l`. Requires Bash and `wc`.
+Pass the input file path as the first argument. The script prints the
+count to the terminal and creates no output files.
+
+Run these checks from the repository root:
+
+```bash
+shell_practice=$(mktemp -d)
+printf 'species\tcount\noak\t12\n' > "$shell_practice/test.txt"
+bash code/CountLines.sh "$shell_practice/test.txt"
+echo "$?"
+bash code/CountLines.sh "$shell_practice/missing.txt"
+echo "$?"
+```
+
+Checked on 17 November 2026. The test file contained two newline
+characters. The script reported 2 lines and returned status 0.
+The original MQB example returned status 0 even when the file was
+missing. After I added `|| exit 1`, the missing-file check printed
+an error and returned status 1.
+
+### Shell: ConcatenateTwoFiles.sh
+
+Demonstrates file concatenation and the difference between writing
+with > and appending with >>. Requires Bash and cat.
+Arguments are two input file paths followed by an output file path.
+The script writes the merged file and displays its contents.
+
+Run these checks from the repository root:
+
+```bash
+shell_practice=$(mktemp -d)
+printf 'oak\n' > "$shell_practice/first.txt"
+printf 'pine\n' > "$shell_practice/second.txt"
+bash code/ConcatenateTwoFiles.sh "$shell_practice/first.txt" "$shell_practice/second.txt" "$shell_practice/combined.txt"
+echo "$?"
+```
+
+Repeat the final two commands to check that rerunning produces
+the same two lines without duplicating them.
+
+Checked on 17 November 2026. Normal and repeated runs produced oak
+followed by pine with status 0. After adding argument-count validation,
+calling without arguments printed usage and returned status 2.
+After adding failure checks to both writing commands, a missing first
+or second input printed an error and returned status 1.
+
+The output path must be distinct from both inputs. Existing output
+content is overwritten. A failed run can leave an empty or partially
+written output file.
+
+### Shell: tiff2_png.sh
+
+Demonstrates a for loop, filename expansion and TIFF-to-PNG conversion.
+Requires Bash, basename and ImageMagick 7 with the magick command.
+I replaced the starter's convert command with magick for ImageMagick 7.
+
+The script takes no arguments. It processes lowercase .tif files in
+the current directory and writes same-name .png files there.
+Existing PNG outputs are overwritten.
+
+Run this check starting from the repository root:
+
+```bash
+project_root=$PWD
+mkdir -p sandbox
+image_practice=$(mktemp -d "$project_root/sandbox/tiff-test.XXXXXX")
+magick -size 10x10 xc:red "$image_practice/red square.tif"
+cd "$image_practice"
+bash "$project_root/code/tiff2_png.sh"
+echo "$?"
+magick identify "red square.png"
+cd "$project_root"
+```
+
+To check a repeated run, repeat the commands from cd "$image_practice"
+onwards.
+
+Checked on 17 November 2026 using ImageMagick 7.1.2-36.
+The syntax check passed. Initial and repeated conversions returned
+status 0 and produced a 10x10 PNG. The filename containing a space
+was preserved.
+
+Use a directory containing valid .tif files, with filenames that
+do not begin with a hyphen. The teaching example does not handle
+an empty directory explicitly or match uppercase .TIF extensions.
+Temporary test images and generated PNGs remain outside Git.
+
+### AI assistance for practice scripts
+
+On 17 November 2026, I used ChatGPT to explain the MQB shell example,
+including printf, positional parameters, quoting and interactive input,
+and to help draft README documentation. I checked the explanations
+against the MQB example and ran the script locally, comparing the
+displayed parameters, updated strings and sums with expected values.
+
+ChatGPT helped me understand why the missing-file check returned status 0
+and suggested adding `|| exit 1`. I tested the change locally with both
+a missing file and a two-line file.
+
+ChatGPT helped explain failed concatenation checks and gave hints
+on argument-count validation and stopping after a failed command.
+I wrote the changes and checked normal runs, repeated runs,
+missing arguments and missing input files locally.
+
+ChatGPT explained the TIFF conversion loop and helped me check
+dependencies, select the ImageMagick 7 command and prepare a small
+test image. I ran the script twice and checked the output format,
+dimensions and exit status locally.
