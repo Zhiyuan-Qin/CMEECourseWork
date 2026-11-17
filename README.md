@@ -263,6 +263,10 @@ get_TreeHeight.R with a zero distance and, separately, an angle of
 90 degrees. Both scripts rejected each input with the appropriate
 error message and exit status 1.
 
+After the invalid-input checks, I confirmed that neither
+results/TreeHts.csv nor results/trees_treeheights.csv existed
+in the temporary test directory.
+
 ### Pound Hill species richness
 
 Script: `code/pound_hill_analysis.R`
