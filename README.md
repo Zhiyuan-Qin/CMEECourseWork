@@ -247,6 +247,22 @@ It also checks repeated execution and rejection of a missing argument.
 Additional manual checks confirmed rejection of multiple arguments,
 a nonexistent input file and missing required columns.
 
+### Tree-height checks following feedback
+
+On 17 November 2026, I reran TreeHeight.R directly and using source(),
+and ran bash code/run_get_TreeHeight.sh. All three checks exited
+with status 0.
+
+For both full-data output files, I checked all 120 rows, confirmed
+that the original columns and row order were preserved, and compared
+every height against distance * tan(angle * pi / 180), using a
+tolerance of 1e-8.
+
+In a separate temporary directory, I tested both TreeHeight.R and
+get_TreeHeight.R with a zero distance and, separately, an angle of
+90 degrees. Both scripts rejected each input with the appropriate
+error message and exit status 1.
+
 ### Pound Hill species richness
 
 Script: `code/pound_hill_analysis.R`
@@ -269,10 +285,29 @@ Outputs:
 
 Blank species counts are treated as observed zeros, as specified in the metadata. Richness is calculated for each quadrat first, then averaged within each plot.
 
-Checks confirmed numeric, non-negative counts with no missing values, 41 species, 59 quadrats and 12 plots. The plot summary contains four plots per treatment and no duplicate plot identifiers. The script was rerun successfully in a fresh Rscript session.
+The script explicitly prints diagnostic summaries and uses assertions
+to reject missing or negative counts and duplicate plot summary rows.
+The checks showed 41 species, 59 quadrats and 12 plots, with four plots
+per treatment.
+
+On 17 November 2026, I copied the script and its two input files into
+a temporary directory containing only code/ and data/, with no results/
+directory. Running Rscript code/pound_hill_analysis.R from that directory
+exited with status 0 and created results/ with both the CSV and PDF.
+The CSV contained the same 12 plot means as the original run.
+I also inspected the original run's PDF and checked its axis labels
+and plotted values against the summary table.
 
 ### AI assistance
 
 I used ChatGPT on 20 and 23 October 2026 for step-by-step explanations of R syntax, feedback on my code, suggestions for checks, and help with README documentation. I checked the suggestions by running the script, independently calculating the first tree height, comparing the original columns and row order, and checking that rerunning replaced the output. I also tested the script using source().
 
 For the Pound Hill practical on 23 October 2026, I used ChatGPT for explanations of R syntax, data reshaping and plotting, code examples and feedback, suggestions for small checks, troubleshooting package installation, and help with documentation and English wording. I checked its suggestions against the supplied metadata, inspected the summary table and generated figure, and reran the script to check reproducibility.
+
+On 17 November 2026, I used ChatGPT to interpret the Assignment 3
+feedback, explain output-directory creation, explicit printing and
+assertions, troubleshoot a missing R package, and help document the
+checks. I ran the revised Pound Hill script, inspected its output,
+and tested it independently in a temporary directory that initially
+had no results/ directory.ChatGPT also helped me construct tree-height output checks and
+invalid-input checks, which I ran and inspected.
