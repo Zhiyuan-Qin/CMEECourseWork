@@ -298,6 +298,17 @@ The CSV contained the same 12 plot means as the original run.
 I also inspected the original run's PDF and checked its axis labels
 and plotted values against the summary table.
 
+### Fresh-clone verification
+
+On 17 November 2026, I checked a fresh clone of commit `b9c8b01`.
+I ran Pound Hill before either tree-height script; it exited with
+status 0 and generated both required output files.
+
+I then ran TreeHeight.R directly and using source(), ran
+get_TreeHeight.R with data/trees.csv, and ran the documented shell
+checks. All four commands exited with status 0.
+`git status --short` produced no output after these checks.
+
 ### AI assistance
 
 I used ChatGPT on 20 and 23 October 2026 for step-by-step explanations of R syntax, feedback on my code, suggestions for checks, and help with README documentation. I checked the suggestions by running the script, independently calculating the first tree height, comparing the original columns and row order, and checking that rerunning replaced the output. I also tested the script using source().
@@ -309,5 +320,5 @@ feedback, explain output-directory creation, explicit printing and
 assertions, troubleshoot a missing R package, and help document the
 checks. I ran the revised Pound Hill script, inspected its output,
 and tested it independently in a temporary directory that initially
-had no results/ directory.ChatGPT also helped me construct tree-height output checks and
+had no results/ directory. ChatGPT also helped me construct tree-height output checks and
 invalid-input checks, which I ran and inspected.
