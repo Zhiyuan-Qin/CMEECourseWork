@@ -155,6 +155,13 @@ Both the tests and the data-cleaning script exited with status 0.
 The original CSV remained unchanged, and the summary contained
 4 records each for `petraea` and `robur`.
 
+In a fresh clone of commit `64e7762`, I ran the cleaning and test
+commands from the repository root exactly as documented above.
+Both exited with status 0, and all three output files were generated.
+I inspected the clean and issues file headers and sample rows,
+and confirmed oak counts of 4 each for `petraea` and `robur`.
+`git status --short` produced no output after these checks.
+
 ### AI assistance
 
 I used ChatGPT to understand Python syntax, dictionaries, sets,
