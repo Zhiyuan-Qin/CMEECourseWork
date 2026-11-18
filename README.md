@@ -503,6 +503,269 @@ do not begin with a hyphen. The teaching example does not handle
 an empty directory explicitly or match uppercase .TIF extensions.
 Temporary test images and generated PNGs remain outside Git.
 
+### Python: loops.py
+
+Demonstrates for loops over a range and a mixed-type list,
+a running total, and a while loop. Requires Python 3.
+No arguments or input files are needed; output is printed
+to the terminal and no files are created.
+
+Run from the repository root:
+
+```bash
+python3 code/loops.py
+echo "$?"
+```
+
+Checked on 17 November 2026. The output showed 0 through 4,
+the six list elements in order, running totals of
+0, 1, 12, 123 and 1234, and integers 1 through 100.
+The script returned status 0.
+
+### Python: cfexercises1.py
+
+Demonstrates functions, conditionals, sorting three numbers,
+and factorial calculations using for loops, recursion and while loops.
+Requires Python 3. No input files are read and no output files are created.
+
+Run these checks from the repository root:
+
+```bash
+python3 code/cfexercises1.py
+echo "$?"
+PYTHONPATH=code python3 -c "import cfexercises1"
+echo "$?"
+```
+
+Checked on 18 November 2026. Direct execution produced 3.0,
+8, [1, 2, 3], three results of 120 for factorial(5), and three
+results of 1 for factorial(0). Both commands returned status 0.
+Importing the module did not execute the example calls.
+
+I extended foo_5's stopping condition to include zero, added
+function docstrings, and placed example calls under a main guard.
+The examples assume suitable numeric inputs. Factorial inputs
+must be non-negative integers; validation is not implemented.
+The recursive version is also limited by Python's recursion depth.
+
+### Python: cfexercises2.py
+
+Demonstrates loops combined with conditionals, remainder tests,
+nested loops and break. Requires Python 3.
+No arguments or input files are needed. Output is printed to the
+terminal and no files are created.
+
+Run from the repository root:
+
+```bash
+python3 code/cfexercises2.py
+echo "$?"
+```
+
+Checked on 18 November 2026 in IPython and by direct execution.
+The six example calls printed 4, 4, 14, 5, 8 and 6 greetings
+respectively. The final example printed hello! 0 through hello! 5.
+Direct execution returned status 0.
+
+These teaching functions assume the example inputs.
+For integer inputs, hello_4 reaches its stopping value only when
+its initial x is at most 15 and 15 - x is divisible by 3.
+With x=True, hello_6 requires an integer starting y below 6 to
+reach its break condition. Other inputs can cause infinite loops.
+
+### Python: MyExampleScript.py
+
+Demonstrates defining a function, storing its returned value,
+and displaying it using an f-string. Requires Python 3.
+No arguments or input files are needed; no files are created.
+
+Run from the repository root:
+
+```bash
+python3 code/MyExampleScript.py
+echo "$?"
+```
+
+Checked on 18 November 2026. The script printed
+"The square of 2 is 4" and returned status 0.
+
+### Python: boilerplate.py
+
+Demonstrates a main function, module and function docstrings,
+and a main guard. Requires Python 3.
+No arguments or input files are needed; no files are created.
+
+Run from the repository root:
+
+```bash
+python3 code/boilerplate.py
+echo "$?"
+PYTHONPATH=code python3 -c "import boilerplate"
+echo "$?"
+```
+
+Checked on 18 November 2026. Direct execution printed
+"This is a boilerplate". Importing the module produced no output.
+Both commands returned status 0.
+
+### Python: using_name.py
+
+Demonstrates how __name__ differs between direct execution and import.
+Requires Python 3. No arguments or input files are needed;
+no files are created.
+
+Run from the repository root:
+
+```bash
+python3 code/using_name.py
+echo "$?"
+PYTHONPATH=code python3 -c "import using_name; print(using_name.module_name())"
+echo "$?"
+```
+
+Checked on 18 November 2026. Direct execution printed
+"This module's name is: __main__". After import, module_name()
+returned using_name, which the explicit print call displayed.
+The guarded main() did not run during import.
+Both commands returned status 0.
+
+### Python: sysargv.py
+
+`code/sysargv.py` displays the script name, the number of supplied
+command-line arguments and their values. Arguments are received as strings.
+
+Run from the repository root:
+
+```bash
+python3 code/sysargv.py
+echo "$?"
+
+python3 code/sysargv.py oak 12
+echo "$?"
+```
+
+Checked on 18 November 2026. Without arguments, the script reported
+0 arguments and an empty list. With oak 12, it reported 2 arguments
+and ['oak', '12']. Both commands returned status 0.
+
+### Python: control_flow.py
+
+`code/control_flow.py` contains the MQB examples for conditionals,
+loops and reusable functions. Its main guard keeps the demonstration
+output separate from importing the functions.
+
+Run from the repository root:
+
+```bash
+python3 code/control_flow.py
+echo "$?"
+
+python3 -m doctest -v code/control_flow.py
+echo "$?"
+
+PYTHONPATH=code python3 -c "import control_flow"
+echo "$?"
+```
+
+Checked on 18 November 2026. Direct execution displayed the expected
+parity, divisor and prime results. All three doctest examples for
+even_or_odd passed. Importing the module produced no demonstration
+output. All three commands returned status 0.
+
+### Python: test_control_flow.py
+
+Imports functions from `control_flow.py` and checks their behaviour
+using assertions. Requires Python 3 and the sibling `control_flow.py`;
+no input files are needed and no files are created.
+
+Run from the repository root:
+
+```bash
+python3 code/test_control_flow.py
+echo "$?"
+```
+
+Checked on 18 November 2026. The supplied checks passed for parity,
+divisors, primes and counting values strictly above a threshold.
+Cases included zero, negative integers, an invalid text input,
+values around the threshold and an empty list.
+The script produced no output and returned status 0.
+
+### Python: observations_practice.py
+
+Reads observation records from CSV and summarises each site's known total
+and missing counts. Exact duplicate records, identified by site, date and
+count text, are counted once. Zero is a known count; a site with no known
+counts has a total of None. Invalid records raise ValueError, including
+invalid records belonging to other sites. Input records are not modified.
+
+Requires Python 3 and the standard-library csv module.
+The report uses data/bootcamp_observations.csv and prints to the terminal;
+no output files are created.
+
+Run from the repository root:
+
+```bash
+python3 code/observations_practice.py
+echo "$?"
+```
+
+Checked on 18 November 2026. The report printed A: (2, 1) and B: (0, 0)
+and returned status 0.
+
+### Python: test_observations_practice.py
+
+Checks count parsing, site filtering, exact duplicates, missing counts,
+known zero counts, empty inputs, invalid records and unchanged input data.
+Uses the ordinary, boundary and invalid bootcamp_observations CSV files
+in data/. An additional E/F example was checked against the manually
+predicted result (10, 1) for E.
+
+Run from the repository root:
+
+```bash
+python3 code/test_observations_practice.py
+echo "$?"
+```
+
+Checked on 18 November 2026. All active checks passed silently and the
+command returned status 0. A deliberate check of the teaching example
+suggested_total failed with status 1: it returned 0 for an all-missing
+site where None was required. The failing assertion is retained as a
+comment with an explanation. The implemented summarise_site distinguishes
+an unknown total from a known zero.
+
+### Python: debugme.py
+
+Demonstrates debugging and exception handling using the MQB division
+example. The final version uses try/except/else to report successful
+divisions and handle division by zero. A main guard prevents the
+demonstration from running during import.
+
+Requires Python 3. No arguments or input files are needed, and no output
+files are created. IPython was used for the interactive debugging steps.
+
+Run from the repository root:
+
+```bash
+python3 code/debugme.py
+echo "$?"
+PYTHONPATH=code python3 -c "import debugme"
+echo "$?"
+```
+
+Checked on 18 November 2026. The original example raised ZeroDivisionError.
+Using IPython's %pdb and a temporary conditional breakpoint confirmed
+x = 20, y = 0 and i = 19 at the failing iteration. The temporary breakpoint
+was then removed. The final version printed 19 successful divisions and
+one division-by-zero message. Direct execution and silent import both
+returned status 0.
+
+This is a teaching example using x = 20, not a general-purpose division
+function. Its returned value is the last successful result, 20.0; this
+does not represent the result of division by zero. Inputs that produce
+no successful division can leave z undefined.
+
 ### AI assistance for practice scripts
 
 On 17 November 2026, I used ChatGPT to explain the MQB shell example,
@@ -524,3 +787,49 @@ ChatGPT explained the TIFF conversion loop and helped me check
 dependencies, select the ImageMagick 7 command and prepare a small
 test image. I ran the script twice and checked the output format,
 dimensions and exit status locally.
+
+On 18 November 2026, I used ChatGPT to explain the MQB functions,
+recursion, docstrings and the main guard, and to help draft README
+documentation. It gave hints for handling factorial(0) and suggested
+small execution and import checks. I wrote the changes, ran the checks
+locally and compared the returned values with expected results.
+
+ChatGPT helped explain range, remainder tests, elif, nested loops
+and break. I traced the examples, ran the script in IPython and
+from the repository root, and checked all six greeting counts
+against the expected results.
+
+ChatGPT explained the f-string in MyExampleScript.py.
+I ran the script locally and checked the displayed result and exit status.
+
+ChatGPT explained how the main guard controls the call to main().
+I checked direct execution and import locally, confirming the
+expected output and exit statuses.
+
+ChatGPT explained the different values of __name__ during direct
+execution and import. I ran both checks locally and compared
+the module names and exit statuses with the expected results.
+
+ChatGPT explained how sys.argv stores the script name and command-line
+arguments, and helped me check the output. I ran the script with no
+arguments and with two arguments, and checked the exit status locally.
+
+ChatGPT explained the control-flow functions, the doctest examples and
+the main guard, and helped me interpret the check results. I ran the
+script, checked its three doctest examples and confirmed that importing
+the module produced no demonstration output.
+
+ChatGPT explained how the separate test script imports the functions,
+how assertions check results, and how the invalid-input and threshold
+checks work. I reviewed and ran the supplied MQB tests locally and
+checked the exit status.
+
+ChatGPT provided staged hints and corrections while I implemented the
+observation functions, explained the supplied checks, and helped construct
+additional checks. ChatGPT suggested the E/F example, whose expected result
+I calculated before testing, and guided the comparison with suggested_total.
+
+ChatGPT guided me through the MQB debugging example, explained the
+traceback, debugger commands and try/except/else behaviour, and helped
+add the main guard. I ran the debugging steps and checked direct
+execution and import locally.
