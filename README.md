@@ -766,6 +766,305 @@ function. Its returned value is the last successful result, 20.0; this
 does not represent the result of division by zero. Inputs that produce
 no successful division can leave z undefined.
 
+### R: basic_io.R
+
+Demonstrates reading data, writing files, appending records and overwriting
+files using the MQB input/output examples. Additional print statements
+show the data dimensions and file contents after each writing step.
+
+Requires R with base packages only.
+Input: data/trees.csv.
+Output: results/MyData.csv. The results directory is created if needed.
+
+Run from the repository root:
+
+```bash
+Rscript code/basic_io.R
+echo "$?"
+```
+
+The script writes to the same output file several times. The final file
+is a space-separated table without column headers, with row names retained,
+despite its .csv extension. It can be read using
+read.table("results/MyData.csv", header = FALSE, row.names = 1).
+
+Checked on 18 November 2026. The input contained 120 rows and 3 columns.
+Direct execution returned status 0. Additional checks using source()
+confirmed that the final output preserved all records and data values.
+Running the script again produced identical final file contents.
+The warning "appending column names to file" is expected during the
+intermediate append demonstration; subsequent writes overwrite that content.
+
+### R: boilerplate.R
+
+Demonstrates defining and calling an R function. my_function prints the
+class of each argument and returns a vector combining the two arguments.
+The script includes numeric and character examples.
+
+Requires R with base packages only.
+No input files or command-line arguments are needed; no files are created.
+
+Run from the repository root:
+
+```bash
+Rscript code/boilerplate.R
+echo "$?"
+```
+
+To load the function into an interactive R session, start R from the
+repository root and run:
+
+```r
+source("code/boilerplate.R")
+ls(pattern = "my_fun")
+class(my_function)
+```
+
+Checked on 18 November 2026. Direct execution printed the expected argument
+classes and returned vectors, and exited with status 0. Sourcing the script
+made my_function available as a function object. An additional mixed-input
+call, my_function(1, "Tiki"), returned c("1", "Tiki") with class "character",
+demonstrating type coercion when combining numeric and character values.
+
+### R: control_flow.R
+
+Demonstrates if/else conditions, for loops over numbers and character
+vectors, and a while loop using the MQB examples. The random-number
+example prints a message only when the generated value is at most 0.5.
+
+Requires R with base packages only.
+No arguments or input files are needed; no output files are created.
+
+Run from the repository root:
+
+```bash
+Rscript code/control_flow.R
+echo "$?"
+Rscript -e 'source("code/control_flow.R"); stopifnot(i == 10)'
+echo "$?"
+```
+
+Checked on 18 November 2026. The logical condition printed "a is TRUE".
+The for loops printed ten square messages, three species messages and
+the elements "a", "bc" and "def". The while loop printed the squares
+from 1 to 100 and finished with i equal to 10. Direct execution and the
+source check both returned status 0. The random conditional message
+appeared in some runs and was absent in others, as expected.
+
+### R: r_conditionals.R
+
+`code/r_conditionals.R` demonstrates conditional branches, required and
+default arguments, rounding, and checks for parity, powers of two and
+prime numbers. It uses base R and requires no input files.
+
+Run from the project root:
+
+```bash
+Rscript code/r_conditionals.R
+```
+
+The prime-number example includes an additional branch for `n == 2`.
+Without this branch, `2:(n - 1)` produces `c(2, 1)` when `n` is 2,
+causing the original example to classify 2 as composite. The prime
+function is intended for single non-negative integers; the power-of-two
+example is used with positive numbers.
+
+Checked on 18 November 2026. The script ran successfully. Additional
+console checks covered even and odd inputs, zero, default arguments,
+an explicit rounding precision, powers of two and a non-power, and
+prime classifications for 0, 1, 2, 3, 4 and 9. These checks returned
+status 0 after correcting the prime-number boundary case. Deliberately
+omitting the required arguments to `is.even()` and `report_height()`
+produced errors and status 1, as expected.
+
+### R: break.R
+
+`code/break.R` demonstrates using `break` to leave a while loop.
+It prints counter values from 0 to 9 and exits when the counter
+reaches 10. It uses base R and requires no input files.
+
+Run from the project root:
+
+```bash
+Rscript code/break.R
+```
+
+Checked on 18 November 2026. The script printed the ten expected
+counter values, excluded 10 from the output and returned status 0.
+
+### R: next.R
+
+`code/next.R` demonstrates using `next` to skip the remainder of
+a loop iteration. It loops over 1 to 10, skips even numbers and
+prints only odd numbers. It uses base R and requires no input files.
+
+Run from the project root:
+
+```bash
+Rscript code/next.R
+```
+
+Checked on 18 November 2026. The script printed 1, 3, 5, 7 and 9,
+excluded the even numbers and returned status 0.
+
+### R: try.R
+
+`code/try.R` demonstrates catching errors during repeated sampling.
+Each sample is drawn with replacement from a simulated population.
+The function reports a mean only when the sample contains more than
+30 distinct values; otherwise it raises an error. Both `lapply()`
+and a for loop use `try()` to retain failed attempts and continue.
+
+The script uses base R, sets a random seed and requires no input files.
+Successful results contain text messages; failed results have class
+`try-error`. Error messages remain visible because `silent = FALSE`.
+
+Run from the project root:
+
+```bash
+Rscript code/try.R
+```
+
+Checked on 18 November 2026. Both methods completed all 15 attempts.
+The lapply results retained two failures, and the for loop continued
+despite three failures. The script returned status 0.
+
+### R: browse.R
+
+`code/browse.R` demonstrates inspecting an exponential-growth
+simulation with `browser()`. The `debug` argument defaults to
+`interactive()`: interactive calls pause inside the loop, while
+Rscript runs complete without entering the debugger.
+
+The script uses base R, requires no input files and saves a plot
+to `results/exponential_growth.pdf`, creating `results` if needed.
+
+Run from the project root:
+
+```bash
+Rscript code/browse.R
+```
+
+To explore the breakpoints, start R from the project root and run
+`source("code/browse.R")`. At the browser prompt, inspect variables,
+use `c` to continue to the next breakpoint, or `Q` to abort the run.
+
+Checked on 18 November 2026. During interactive debugging, I inspected
+the variables at generations 2 and 3, continued with `c` and aborted
+with `Q`. The revised script ran with Rscript and returned status 0.
+Additional checks confirmed that the ten default population values
+matched `exp(0:9)` and that the output PDF existed and was non-empty.
+These checks also returned status 0.
+
+### R: observations_practice.R
+
+`code/observations_practice.R` reads observation data as character
+columns, checks the column names and required fields, validates counts
+and then converts them to integers. Invalid counts produce an error
+identifying the file, CSV line, column, value and expected format.
+
+The summary removes exact duplicate rows before calculating
+`total_known` and `missing_count` for each site. All-missing counts
+produce an unknown total (`NA`), while observed zeros remain zero.
+
+Inputs:
+- `data/bootcamp_observations.csv`
+- `data/bootcamp_observations_boundary.csv`
+
+Output: `results/observations_known_totals.pdf`. The base-R plot
+shows known totals and explicitly identifies site C as all-missing.
+
+Run from the project root:
+
+```bash
+Rscript code/observations_practice.R
+```
+
+Checked on 19 November 2026. The script returned status 0 and passed
+checks for A (2, 1), B (0, 0), C (NA, 2) and D (0, 0), where each
+pair represents total known count and missing count. I inspected
+the PDF and confirmed that zero values and the all-missing case
+were distinguished. A separate call using
+`data/bootcamp_observations_invalid.csv` rejected -1 on CSV line 2
+with an informative error and status 1, as expected.
+
+#### Comparison with Python
+
+Missing counts, observed zeros and duplicate records have the same
+meaning in both languages. Python uses None for the unknown total
+in this exercise, while R uses NA. In R, summing all-missing counts
+with `na.rm = TRUE` returns zero, so the all-missing case must be
+checked before interpreting the sum.
+
+Checking only the number of sites would not detect double-counting:
+without deduplication, A would total 4 while the number of sites
+would remain two. The check that A totals 2 detects this mistake.
+Deduplication must compare complete rows, because separate genuine
+observations can have equal counts.
+
+An informative error for the other invalid entry would be:
+`bootcamp_observations_invalid.csv: CSV line 3, column 'count': found 'many'; expected an empty field or a non-negative integer.`
+
+### R: data_wrang.R
+
+`code/data_wrang.R` follows the MQB starter script to reshape the
+Pound Hill dataset using `reshape2`. It transposes the raw matrix,
+sets column names, converts documented blank counts to zeros and
+uses `melt()` to create a long table. Each row represents one
+species count in one sampled quadrat.
+
+Inputs:
+- `data/pound_hill_data.csv`
+- `data/pound_hill_meta_data.csv`
+
+Output: `results/pound_hill_long.csv`.
+Requires R and the `reshape2` package.
+
+Run from the project root:
+
+```bash
+Rscript code/data_wrang.R
+```
+
+Checked on 19 November 2026. The script and additional output checks
+returned status 0. The saved table contained 2419 rows and six columns,
+representing 41 species across 59 sampled quadrats and 12 plots.
+Counts were numeric, non-negative whole numbers without missing
+values. No quadrat–species combination was duplicated. Quadrats
+were identified using Cultivation, Block, Plot and Quadrat together.
+
+### R: data_wrang_tidy.R
+
+`code/data_wrang_tidy.R` adapts the MQB reshape2 starter using
+`tidyr::pivot_longer()` to reshape species columns and
+`dplyr::mutate()` with `across()` to convert column types.
+It retains the same metadata-based treatment of blank counts.
+
+Inputs:
+- `data/pound_hill_data.csv`
+- `data/pound_hill_meta_data.csv`
+
+Output: `results/pound_hill_long_tidy.csv`.
+Requires R and the `dplyr` and `tidyr` packages.
+
+Run from the project root:
+
+```bash
+Rscript code/data_wrang_tidy.R
+```
+
+Checked on 19 November 2026. The script returned status 0 and
+produced 2419 rows and six columns, with five factor columns and
+integer counts. An initial type-conversion error arose because
+single-column bracket selection on a tibble returned a table.
+Replacing the original conversions with mutate and across resolved it.
+
+Additional console checks confirmed matching column names and
+dimensions and unique quadrat–species combinations. After sorting
+both saved tables by Cultivation, Block, Plot, Quadrat and Species
+and resetting row names, identical() confirmed that the reshape2
+and tidyverse outputs matched. The comparison returned status 0.
+
 ### AI assistance for practice scripts
 
 On 17 November 2026, I used ChatGPT to explain the MQB shell example,
@@ -833,3 +1132,61 @@ ChatGPT guided me through the MQB debugging example, explained the
 traceback, debugger commands and try/except/else behaviour, and helped
 add the main guard. I ran the debugging steps and checked direct
 execution and import locally.
+
+ChatGPT explained the MQB input/output examples and supplied additional
+inspection statements and checks for the saved data and repeated execution.
+I ran the script and checks locally and reviewed the output and expected
+append warning.
+
+ChatGPT explained the MQB function example, the difference between printed
+messages and returned values, and suggested a mixed-input check to
+demonstrate vector type coercion. I ran the script and interactive checks
+locally and reviewed the results.
+
+ChatGPT explained the MQB conditional and loop examples and supplied an
+additional check of the final loop counter. I ran the examples using
+Rscript and source() and reviewed their output locally.
+
+ChatGPT explained the conditional examples and the distinction between
+required and default arguments, supplied additional console checks,
+and helped identify why the original prime-number example misclassified
+2. ChatGPT suggested an explicit branch for this boundary case. I added
+the branch and ran the checks locally.
+
+ChatGPT explained the MQB break and next examples, clarified the
+difference between leaving a loop and skipping one iteration,
+and helped me compare the observed output with the expected values.
+I saved and ran both scripts locally.
+
+ChatGPT explained the MQB sampling and error-catching examples,
+including how try-error objects are retained in lists. It suggested
+printing the result class and list lengths, and using separate names
+for the lapply and loop results. I ran the script and inspected the
+successful and failed attempts locally.
+
+ChatGPT explained the MQB browser example and guided me through
+inspecting variables, continuing execution and aborting a debug run.
+It supplied an adaptation using `debug = interactive()` and PDF output,
+plus checks against the expected exponential-growth values. I applied
+the changes and ran the interactive and terminal checks locally.
+
+On 19 November 2026, ChatGPT provided staged scaffolds, hints and
+corrections for reading, validation, deduplication and grouped summaries.
+I filled in the conditions and calculations and ran each stage locally.
+ChatGPT supplied the result-table assembly, assertion checks and plotting
+code, and explained the comparison questions when I was unsure.
+I confirmed that failing to deduplicate would give A a total of 4
+without changing the number of sites. ChatGPT helped draft this
+documentation.
+
+ChatGPT explained the MQB starter script and supplied additional
+console checks for the saved long table. I ran the script and checks
+locally and explained why the data were transposed and why the
+metadata justified converting blanks to zeros. ChatGPT helped turn
+my explanations into English comments and draft this documentation.
+
+ChatGPT guided the adaptation of the MQB starter using pivot_longer,
+supplied the mutate and across conversion code, and explained the
+tibble-related type-conversion error. It also supplied console checks
+to compare the two saved outputs after sorting. I applied the changes
+and ran the script and comparison locally.
