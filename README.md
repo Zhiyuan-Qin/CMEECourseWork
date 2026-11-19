@@ -17,7 +17,7 @@ This repository contains my CMEE coursework and practical exercises.
 - `code/tabtocsv.sh`: converts tabs to commas.
 - `code/csvtospace.sh`: converts commas to spaces.
 
-## How to run
+### How to run
 
 The commands in `code/unixPrac1.txt` are intended to be entered from
 the `code/` directory and therefore use `../data/` paths. They use
@@ -46,7 +46,7 @@ The outputs are saved as `results/tab-example.tsv.csv` and
 Running a script again overwrites its corresponding output file.
 The input files remain unchanged.
 
-## Testing
+### Testing
 
 - Both scripts passed syntax checks using `bash -n`.
 - Both scripts were tested with filenames containing spaces and with empty fields.
@@ -94,7 +94,7 @@ inputs remained unchanged and repeated runs replaced outputs rather
 than appending to them. All converter calls and the verification
 command returned status 0.
 
-## Data and limitations
+### Data and limitations
 
 The FASTA and temperature input files were copied from the course materials.
 `data/tab-example.tsv` is a small example I created for testing, containing an empty field.
@@ -103,7 +103,7 @@ The scripts perform simple character substitution and preserve empty fields.
 They do not handle quoted CSV fields containing commas.
 Spaces within CSV fields can make the space-delimited output ambiguous.
 
-## AI use record
+### AI use record
 
 - Tool: ChatGPT / Codex.
 - Date: 2026-10-08.
@@ -192,6 +192,15 @@ I inspected the clean and issues file headers and sample rows,
 and confirmed oak counts of 4 each for `petraea` and `robur`.
 `git status --short` produced no output after these checks.
 
+On 19 November 2026, I repeated the README cleaning and test commands
+in a fresh local clone of commit `c99f7ef`. Both returned status 0.
+The cleaner generated all three outputs, containing 24 accepted
+records, 12 issue records and oak counts of 4 each for petraea and
+robur. Additional checks confirmed that every input record was
+accounted for, accepted records were sorted by identifier and the
+raw CSV remained unchanged. Running the cleaner again produced
+byte-identical copies of all three outputs.
+
 ### AI assistance
 
 I used ChatGPT to understand Python syntax, dictionaries, sets,
@@ -206,6 +215,11 @@ to test the connection between record cleaning and oak summarisation,
 and help label existing tests with descriptive comments. I ran the
 tests and cleaning script, inspected the outputs, and checked that
 the raw input remained unchanged.
+
+ChatGPT reviewed the labelled tests against the feedback and supplied
+the additional clean-checkout verification code. I ran it locally
+and checked the record counts, oak summary, input preservation and
+repeatability.
 
 ### Limitations
 
