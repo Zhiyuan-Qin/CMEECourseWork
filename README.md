@@ -111,7 +111,7 @@ Spaces within CSV fields can make the space-delimited output ambiguous.
 - Purpose: Explain commands and shell syntax, help diagnose errors, suggest small code snippets and test commands, and help draft documentation.
 - Verification: I ran the commands and scripts locally, inspected their outputs and exit statuses, checked script syntax with `bash -n`, and used `diff` to confirm that the tested input files remained unchanged.
 
-ChatGPT supplied the additional clean-checkout verification code and
+On 19 November 2026, ChatGPT supplied the additional clean-checkout verification code and
 helped review the README against the feedback. I ran the checks locally
 and inspected the reported output paths and exit status.
 
@@ -216,10 +216,9 @@ and help label existing tests with descriptive comments. I ran the
 tests and cleaning script, inspected the outputs, and checked that
 the raw input remained unchanged.
 
-ChatGPT reviewed the labelled tests against the feedback and supplied
-the additional clean-checkout verification code. I ran it locally
-and checked the record counts, oak summary, input preservation and
-repeatability.
+On 19 November 2026, ChatGPT reviewed the labelled tests against the feedback and supplied
+the additional clean-checkout verification code. I ran it locally and
+checked the record counts, oak summary, input preservation and repeatability.
 
 ### Limitations
 
@@ -381,9 +380,17 @@ unchanged. The verification command returned status 0.
 
 ### AI assistance
 
-I used ChatGPT on 20 and 23 October 2026 for step-by-step explanations of R syntax, feedback on my code, suggestions for checks, and help with README documentation. I checked the suggestions by running the script, independently calculating the first tree height, comparing the original columns and row order, and checking that rerunning replaced the output. I also tested the script using source().
+I used ChatGPT on 20 and 23 October 2026 for step-by-step explanations of R syntax,
+feedback on my code, suggestions for checks, and help with README documentation.
+I checked the suggestions by running the script, independently calculating the
+first tree height, comparing the original columns and row order, and checking that
+rerunning replaced the output. I also tested the script using source().
 
-For the Pound Hill practical on 23 October 2026, I used ChatGPT for explanations of R syntax, data reshaping and plotting, code examples and feedback, suggestions for small checks, troubleshooting package installation, and help with documentation and English wording. I checked its suggestions against the supplied metadata, inspected the summary table and generated figure, and reran the script to check reproducibility.
+For the Pound Hill practical on 23 October 2026, I used ChatGPT for explanations
+of R syntax, data reshaping and plotting, code examples and feedback, suggestions
+for small checks, troubleshooting package installation, and help with documentation
+and English wording. I checked its suggestions against the supplied metadata,
+inspected the summary table and generated figure, and reran the script to check reproducibility.
 
 On 17 November 2026, I used ChatGPT to interpret the Assignment 3
 feedback, explain output-directory creation, explicit printing and
@@ -393,7 +400,7 @@ and tested it independently in a temporary directory that initially
 had no results/ directory. ChatGPT also helped me construct tree-height output checks and
 invalid-input checks, which I ran and inspected.
 
-ChatGPT supplied additional clean-checkout, numerical comparison
+On 19 November 2026, ChatGPT supplied additional clean-checkout, numerical comparison
 and invalid-input verification code, and helped document the results.
 I ran these checks locally, inspected the exit statuses and output
 tables, and opened the newly generated Pound Hill PDF.
