@@ -357,6 +357,28 @@ get_TreeHeight.R with data/trees.csv, and ran the documented shell
 checks. All four commands exited with status 0.
 `git status --short` produced no output after these checks.
 
+On 19 November 2026, I repeated the checks in a fresh local clone
+of commit `7da90a4`. I ran the Pound Hill script first, with no
+results/ directory present. It returned status 0 and created both
+required outputs. The CSV contained 12 unique plots, with four
+plots per treatment and finite, non-negative mean richness values.
+I opened the newly generated PDF and checked its labels and plotted
+values against the table.
+
+TreeHeight.R and the documented tree-height shell checks also
+returned status 0. For both full-data outputs, I checked all 120
+rows, confirmed that the original columns and row order were
+preserved, and compared every height with
+distance * tan(angle * pi / 180). The toy example returned a height
+of 8 metres.
+
+In separate temporary directories, I tested both tree-height scripts
+with a zero distance, first without an existing output and then
+with a previously generated output. Both scripts returned status 1
+with the expected distance-validation message. Neither created a
+new output nor changed an existing one, and the test inputs remained
+unchanged. The verification command returned status 0.
+
 ### AI assistance
 
 I used ChatGPT on 20 and 23 October 2026 for step-by-step explanations of R syntax, feedback on my code, suggestions for checks, and help with README documentation. I checked the suggestions by running the script, independently calculating the first tree height, comparing the original columns and row order, and checking that rerunning replaced the output. I also tested the script using source().
@@ -370,6 +392,11 @@ checks. I ran the revised Pound Hill script, inspected its output,
 and tested it independently in a temporary directory that initially
 had no results/ directory. ChatGPT also helped me construct tree-height output checks and
 invalid-input checks, which I ran and inspected.
+
+ChatGPT supplied additional clean-checkout, numerical comparison
+and invalid-input verification code, and helped document the results.
+I ran these checks locally, inspected the exit statuses and output
+tables, and opened the newly generated Pound Hill PDF.
 
 ## In-class practice scripts
 
