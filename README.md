@@ -1268,3 +1268,24 @@ supplied the mutate and across conversion code, and explained the
 tibble-related type-conversion error. It also supplied console checks
 to compare the two saved outputs after sorting. I applied the changes
 and ran the script and comparison locally.
+
+## Final GitHub-clone verification
+
+On 19 November 2026, I cloned commit `f569a86` directly from GitHub
+into a new temporary directory. The main Assignment 1–3 commands
+ran successfully, with Pound Hill run first before results/ existed.
+
+I checked all seven shell practice scripts, including expected
+invalid-input statuses and repeated file concatenation and image
+conversion. All 12 Python practice scripts ran successfully, and
+the control-flow doctests and separate test scripts passed.
+All 11 R practice scripts also returned status 0.
+
+The two Pound Hill long tables each contained 2419 rows and six
+columns and were identical after sorting by their identifiers.
+All three checked PDFs existed, were non-empty and displayed
+correctly when opened. The clone's git status remained clean.
+
+ChatGPT helped organise these final checks and draft this record.
+I ran the commands locally and inspected the reported results
+and generated figures.
