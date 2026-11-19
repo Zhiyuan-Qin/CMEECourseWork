@@ -19,6 +19,12 @@ This repository contains my CMEE coursework and practical exercises.
 
 ## How to run
 
+The commands in `code/unixPrac1.txt` are intended to be entered from
+the `code/` directory and therefore use `../data/` paths. They use
+`wc`, `tail`, `tr`, `grep` and `awk`.
+
+The converter commands below are run from the repository root.
+
 The shell scripts require Bash and standard UNIX command-line tools.
 
 Run the following commands from the repository root:
@@ -68,6 +74,26 @@ and generated `results/tab-example.tsv.csv` and
 the empty field was preserved in the CSV. After running the
 examples, `git status --short` produced no output.
 
+### Clean-checkout verification - 2026-11-19
+
+I repeated the converter checks in a fresh local clone of commit
+`5ccbcbb`, running both scripts from the repository root.
+The tracked `data/tab-example.tsv` and a temporary file named
+`input with spaces.tsv` both passed.
+
+The generated paths were:
+- `results/tab-example.tsv.csv`
+- `results/tab-example.tsv.csv.txt`
+- `results/input with spaces.tsv.csv`
+- `results/input with spaces.tsv.csv.txt`
+
+For each input, I ran each converter twice and compared the complete
+output bytes with the expected character substitutions. These checks
+confirmed that empty-field positions and line endings were preserved,
+inputs remained unchanged and repeated runs replaced outputs rather
+than appending to them. All converter calls and the verification
+command returned status 0.
+
 ## Data and limitations
 
 The FASTA and temperature input files were copied from the course materials.
@@ -84,6 +110,10 @@ Spaces within CSV fields can make the space-delimited output ambiguous.
 - Tasks: Assignment 1 UNIX practicals, shell scripts, testing, and README documentation.
 - Purpose: Explain commands and shell syntax, help diagnose errors, suggest small code snippets and test commands, and help draft documentation.
 - Verification: I ran the commands and scripts locally, inspected their outputs and exit statuses, checked script syntax with `bash -n`, and used `diff` to confirm that the tested input files remained unchanged.
+
+ChatGPT supplied the additional clean-checkout verification code and
+helped review the README against the feedback. I ran the checks locally
+and inspected the reported output paths and exit status.
 
 ## Bootcamp Assignment 2: Tree-survey cleaning
 
